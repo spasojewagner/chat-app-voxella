@@ -3,7 +3,7 @@ import React from 'react';
 import Chat from '../components/chat/Chat';
 import { UserInfo } from '../components/user/UserInfo';
 import Details from '../components/details/Details';
-import ChatList from '../components/chat/chatList';
+import ChatList from '../components/chat/ChatList';
 import TopHeader from '../components/TopHeader';
 import NoChatOpen from '../components/chat/NoChatOpen';
 import { useChatStore } from '../store/useChatStore';
