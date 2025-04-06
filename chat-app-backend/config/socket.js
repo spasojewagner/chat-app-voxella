@@ -7,9 +7,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173"],
+    origin: process.env.NODE_ENV === "production" ? "https://chat-app-voxella-1.onrender.com" : "http://localhost:5173",
   },
 });
+
 
 // Store za online korisnike
 const userSocketMap = {};
