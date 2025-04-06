@@ -1,14 +1,6 @@
-
-import axios from "axios";
-
-// const token = localStorage.getItem("token");
-
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:8000",
+  baseURL: import.meta.env.MODE === "development" 
+    ? "http://localhost:8000/api" 
+    : import.meta.env.VITE_API_URL,
   withCredentials: true,
-  // headers: {
-  //   "Content-Type": "application/json",
-  //   ...(token && { "Authorization": `Bearer ${token}` }),
-  // },
 });
-
