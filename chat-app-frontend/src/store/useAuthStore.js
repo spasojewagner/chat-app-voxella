@@ -18,13 +18,7 @@ export const useAuthStore = create((set, get) => ({
   socket: null,
   blockedBy: null,
 
-  notifications: [],
-  addNotification: (notification) =>
-    set({ notifications: [...get().notifications, notification] }),
-  removeNotification: (id) =>
-    set({ notifications: get().notifications.filter((n) => n.id !== id) }),
-  clearNotifications: () => set({ notifications: [] }),
-
+ 
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("api/auth/check");
