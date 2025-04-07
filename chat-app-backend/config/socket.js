@@ -7,27 +7,24 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.NODE_ENV === "production" ? "https://chat-app-voxella-1.onrender.com" : "http://localhost:5173",
+    origin: ["http://localhost:5173"],
   },
 });
-
-
-// Store za online korisnike
-const userSocketMap = {};
 
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
+// used to store online users
+const userSocketMap = {}; // {userId: socketId}
+
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
 
   const userId = socket.handshake.query.userId;
-  if (userId) {
-    userSocketMap[userId] = socket.id;
-  }
+  if (userId) userSocketMap[userId] = socket.id;
 
-  // Emitujemo online korisnike
+  // io.emit() is used to send events to all the connected clients
   io.emit("x", Object.keys(userSocketMap));
 
   socket.on("disconnect", () => {

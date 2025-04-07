@@ -1,12 +1,8 @@
-// store/useAuthStore.js
 import { create } from "zustand";
 import { axiosInstance } from "../https";
 import { io } from "socket.io-client";
 
-// Dinamičko određivanje URL-a: ako je hostname "localhost", koristi localhost, u suprotnom koristi window.location.origin
-const BASE_URL = window.location.hostname === "localhost"
-  ? "http://localhost:8000"
-  : window.location.origin;
+const BASE_URL = import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,

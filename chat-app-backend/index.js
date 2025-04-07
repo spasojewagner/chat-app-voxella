@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from "url";
+
 
 import connectDB from "./config/dataBase.js";
 import authRoutes from "./routes/userRoute.js";
@@ -11,11 +11,8 @@ import messageRoutes from "./routes/messageRoute.js";
 import { app, server } from "./config/socket.js";
 
 dotenv.config();
-const PORT = process.env.PORT || 5000;
-
-// __dirname za ES module (pošto nije dostupan automatski kao u CommonJS)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const PORT = process.env.PORT ;
+const __dirname = path.resolve();
 
 // Middlewares
 app.use(express.json({ limit: "10mb" }));
