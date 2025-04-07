@@ -1,9 +1,11 @@
-// store/useAuthStore.js
 import { create } from "zustand";
 import { axiosInstance } from "../https";
 import { io } from "socket.io-client";
 
-const BASE_URL = "http://localhost:8000/";
+// Dinamičko određivanje URL-a: ako je hostname "localhost", koristi localhost, u suprotnom koristi window.location.origin
+const BASE_URL = window.location.hostname === "localhost"
+  ? "http://localhost:8000"
+  : window.location.origin;
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -25,7 +27,6 @@ export const useAuthStore = create((set, get) => ({
   checkAuth: async () => {
     try {
       const res = await axiosInstance.get("api/auth/check");
-
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
@@ -115,7 +116,7 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // Nova funkcija koja proverava da li je trenutni korisnik blokiran od strane target korisnika
+  // Funkcija za proveru block statusa
   checkBlockStatus: async (targetUserId) => {
     try {
       const res = await axiosInstance.get(`/api/auth/${targetUserId}/block-status`);
@@ -133,14 +134,14 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
+    // Kreiramo socket konekciju sa dinamički određenim BASE_URL
     const socket = io(BASE_URL, {
       query: {
         userId: authUser._id,
       },
     });
     socket.connect();
-
-    set({ socket: socket });
+    set({ socket });
 
     socket.on("x", (userIds) => {
       set({ onlineUsers: userIds });
@@ -148,13 +149,13 @@ export const useAuthStore = create((set, get) => ({
 
     // Ako primimo događaj da je neko blokirao authUser, postavi blockedBy
     socket.on("userBlocked", ({ blocker, blocked }) => {
-      if (blocked === get().authUser._id) {
+      if (blocked === authUser._id) {
         set({ blockedBy: blocker });
       }
     });
     
     socket.on("userUnblocked", ({ blocker, unblocked }) => {
-      if (unblocked === get().authUser._id) {
+      if (unblocked === authUser._id) {
         set({ blockedBy: null });
       }
     });

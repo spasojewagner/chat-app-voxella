@@ -1,8 +1,11 @@
-import axios from 'axios'
+import axios from 'axios';
+
+// Ako se aplikacija pokreće na localhost-u, koristi localhost, inače koristi window.location.origin
+const BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8000/api'
+  : `${window.location.origin}/api`;
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.MODE === "development" 
-    ? "http://localhost:8000/api" 
-    : import.meta.env.VITE_API_URL,
+  baseURL: BASE_URL,
   withCredentials: true,
 });
