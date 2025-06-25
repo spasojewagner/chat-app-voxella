@@ -167,7 +167,7 @@ Doprinosi su dobrodošli! Molimo:
 **@spasojewagner**
 
 - GitHub: [@spasojewagner](https://github.com/spasojewagner)
-- LinkedIn: [Vaš LinkedIn profil](https://linkedin.com/in/yourprofile)
+- LinkedIn: [METODA](https://www.linkedin.com/in/marko-spasojevic-metoda)
 
 ---
 
