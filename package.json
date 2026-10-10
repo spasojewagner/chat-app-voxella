@@ -1,13 +1,18 @@
 {
-  "name": "chat-app",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "voxella",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Real-time one-to-one messaging: Express, Socket.IO, MongoDB and React.",
+  "license": "MIT",
   "scripts": {
-  "build": "npm install --prefix chat-app-backend && npm install --prefix chat-app-frontend && npm run build --prefix chat-app-frontend ",
-   "start": "npm run start --prefix chat-app-backend"
+    "build": "npm ci --prefix chat-app-backend --omit=dev && npm ci --prefix chat-app-frontend --include=dev && npm run build --prefix chat-app-frontend",
+    "start": "npm start --prefix chat-app-backend",
+    "dev:api": "npm run dev --prefix chat-app-backend",
+    "dev:web": "npm run dev --prefix chat-app-frontend",
+    "test": "npm test --prefix chat-app-backend && npm test --prefix chat-app-frontend",
+    "lint": "npm run lint --prefix chat-app-backend && npm run lint --prefix chat-app-frontend"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "engines": {
+    "node": ">=20"
+  }
 }
